@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rclpy
 from rclpy.node import Node
@@ -35,7 +35,10 @@ class VideoCamera(object):
 class CameraPublisher(Node):
     def __init__(self, camera: VideoCamera, fps: int):
         super().__init__('camera_publisher')
-        self._publisher = self.create_publisher(Byte, 'camera_topic', 10)
+        self._publisher = self.create_publisher(Byte, 'camera_topic', qos_profile=45)
+        # qos_profile = the queue size - "Queue size is a required QoS (quality of service) 
+        # setting that limits the amount of queued messages if a subscriber is not receiving 
+        # them fast enough."
 
         # create a timer callback that gets executed every "timer_period" seconds
         self.fps = fps
